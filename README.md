@@ -12,7 +12,7 @@
 # !pip install scikit-learn
 ```
 
-## Import and loading in data
+## Import and loading data
 
 Global import declarations and loading.
 
@@ -50,7 +50,7 @@ Helper functions which move complexity outside the core phases of data science: 
 ```python
 def group_by_month(timestamp_str):
     """
-    Groups the sparse timestamps of each store inside a monthly groupe. 
+    Groups the sparse timestamps of each store inside a monthly group. 
     This is relevant since the number of timestamps in not consistent across periods in a month.
     Furthermore more sophisticated models such as AMRA / ARIMA modeling require lag times of weeks or months.
     
@@ -170,7 +170,7 @@ def plot_monthly_series(monthly_series):
 
 The data is given on an hourly basis. After some assessment it made the most sense group the hourly sales data into monthly sales data, making the months much easier to compare.
 
-The following section transformes the column names (the hourly timestamps) into chunks of monthly data, aggregating all the sales within a month period.
+The following section transforms the column names (the hourly timestamps) into chunks of monthly data, aggregating all the sales within a month period.
 
 Initially the idea was to create a sorted list of year-month timestamps and use it at a store level to predict / forecast monthly sales.
 
@@ -204,7 +204,7 @@ store_id_list = list(raw_csv.index)
 # generate a dictionary of store_id with their appropriate series values (interpretable by month)
 store_dict = {}
 
-# Store the monthly sales per monthy for each store. 
+# Store the monthly sales per each store. 
 for i in range(0, len(raw_csv.index)):
     monthly_series = []
     for _, key in enumerate(sorted_key_list):
@@ -217,7 +217,7 @@ for i in range(0, len(raw_csv.index)):
 
 The next steps are identifying a target variable in order to produce a supervised model.
 
-For simplity the 'total_products_sold' of each store were selected. This is of course a simple metric and prone to bias (as we shall see shortly) however it makes the most sense since we are trying to analyse what features of the surrounding area can affect the sales of a store.
+For simplicity the 'total_products_sold' of each store were selected. This is of course a simple metric and prone to bias (as we shall see shortly) however it makes the most sense since we are trying to analyze what features of the surrounding area can affect the sales of a store.
 
 
 ```python
@@ -1803,7 +1803,7 @@ merged_df
 
 ## Start modeling with cross validation implementation
 
-This is the modeling step. It fits a variety of models by tweaking the weight type and the number of neighbours to analyse.
+This is the modeling step. It fits a variety of models by tweaking the weight type and the number of neighbours to analyze.
 
 The output shows a 10-fold cross-validation mean score for a range of k-nn parameters.
 
@@ -1915,9 +1915,9 @@ This metric is used to explain the amount of variance in the dependent variable 
 
 The k-nn model lends itself well to the type of problem we are presented with. However the results are very poor and random. 
 
-There is clearly bias in the data, mostly attributed to the large difference between the the stores sales data.
+There is clearly bias in the data, mostly attributed to the large difference between the stores sales data.
 
-In this first iteration the number of periods which contribute towards the total sales period is completely ignored. The model results are used as a benchmark against a version where there is a defined contraint on the number of periods of a store.
+In this first iteration the number of periods which contribute towards the total sales period is completely ignored. The model results are used as a benchmark against a version where there is a defined constraints on the number of periods of a store.
 
 ## Attempts to improve the model.
 
@@ -2047,12 +2047,12 @@ for _, weight_type in enumerate(['uniform', 'distance']):
 
 ## Conclusion
 
-First of all, the number of k-neighbour had to be adjusted since there are less degrees of freedom due to the retriction on the dataset.
+First of all, the number of k-neighbour had to be adjusted since there are less degrees of freedom due to the restriction on the dataset.
 
-Unfortunatelly there is not visible improvement over the previous iteration.
+Unfortunately there is not visible improvement over the previous iteration.
 
 Different modeling features could be used to create more accurate predictions. As it is now, the model has no power to explain the sales of a store given its surroundings. 
 
-The data is however prepared in a way which could be grouped and pivoted to analyse the coordinates, opening hours of surrounding stores and the labels under the 'type' of surroundings. 
+The data is however prepared in a way which could be grouped and pivoted to analyze the coordinates, opening hours of surrounding stores and the labels under the 'type' of surroundings. 
 
 Given more time, the model could surely be improved and insights could be generated based on the feature vectors of the surroundings.
